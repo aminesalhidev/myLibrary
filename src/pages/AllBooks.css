@@ -1,0 +1,65 @@
+/* CSS per il componente AllBooks */
+
+#all-books {
+  font-family: Arial, sans-serif; /* Font comune negli anni 2000 */
+  background-color: #f0f0f0; /* Colore di sfondo chiaro e neutro */
+  color: #333; /* Colore del testo scuro per una buona leggibilità */
+  max-width: 1000px; /* Larghezza massima per mantenere il contenuto centrato */
+  margin: 20px auto; /* Centratura orizzontale con spazio verticale */
+  padding: 20px; /* Spazio interno */
+  border: 1px solid #ccc; /* Bordo sottile e grigio chiaro */
+  border-radius: 8px; /* Bordo arrotondato per un aspetto più morbido */
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Ombra per un effetto di sollevamento */
+  background: #ffffff; /* Colore di sfondo bianco per il contenuto */
+}
+
+h1 {
+  font-size: 2rem; /* Dimensione del font del titolo */
+  margin-bottom: 20px; /* Spazio sotto il titolo */
+  text-align: center; /* Allinea il titolo al centro */
+  color: #0078d4; /* Colore blu, ispirato a uno stile web classico */
+  border-bottom: 2px solid #0078d4; /* Bordo inferiore blu per enfatizzare il titolo */
+  padding-bottom: 10px; /* Spazio sotto il testo del titolo */
+}
+
+/* Contenitore della griglia per i libri */
+.book-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); /* Colonne responsivi */
+  gap: 20px; /* Spazio tra gli elementi della griglia */
+}
+
+/* Stile per ogni elemento della griglia */
+.book-item {
+  background-color: #ffffff; /* Colore di sfondo bianco per ogni libro */
+  border: 1px solid #ddd; /* Bordo sottile e grigio chiaro */
+  border-radius: 4px; /* Bordo arrotondato */
+  padding: 15px; /* Spazio interno per ogni libro */
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.1); /* Ombra per l'effetto di sollevamento */
+}
+
+.book-item h2 {
+  font-size: 1.5rem; /* Dimensione del font per il titolo del libro */
+  margin-top: 0; /* Rimuove lo spazio sopra il titolo */
+  color: #333; /* Colore scuro per il testo del titolo */
+}
+
+.book-item p {
+  margin: 5px 0; /* Spazio sopra e sotto ogni paragrafo */
+  color: #666; /* Colore del testo per una buona leggibilità */
+}
+
+button {
+  background-color: #0078d4; /* Colore blu per i bottoni */
+  color: #ffffff; /* Colore del testo bianco per i bottoni */
+  border: none; /* Rimuove i bordi predefiniti dei bottoni */
+  border-radius: 4px; /* Bordo arrotondato per i bottoni */
+  padding: 10px 20px; /* Spazio interno dei bottoni */
+  font-size: 1rem; /* Dimensione del font dei bottoni */
+  cursor: pointer; /* Cambia il cursore quando si passa sopra il bottone */
+  transition: background-color 0.3s ease; /* Effetto di transizione per il colore di sfondo */
+}
+
+button:hover {
+  background-color: #005a9e; /* Colore blu scuro per l'effetto hover */
+}

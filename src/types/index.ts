@@ -1,6 +1,3 @@
-
-// src/types.ts rinforsamento con typescript
-
 export interface Book {
     _id: string;
     title: string;
@@ -8,5 +5,13 @@ export interface Book {
     published_year: number;
     genre: string;
     stock: number;
+  }
+  
+  export interface Suggestion {
+    title: string;
+  }
+  
+  export interface Suggestion {
+    title: string;
   }
   

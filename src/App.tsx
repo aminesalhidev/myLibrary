@@ -1,18 +1,18 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import axios from 'axios';
-
-//i componenti che ho aggiunto riguardante inserimento dei dati dentro le tabelle
 import BookList from './components/BookList';
 import BookForm from './components/BookForm';
+import AllBooks from './pages/AllBooks';
 import { Book } from './types';
-import { API_URL } from './config'; // Importa l'URL di base
-import './App.css'
-
+import { API_URL } from './config';
+import './App.css';
 
 const App: React.FC = () => {
   const [books, setBooks] = useState<Book[]>([]);
   const [search, setSearch] = useState<string>('');
   const [editingBook, setEditingBook] = useState<Book | null>(null);
+  const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
 
   useEffect(() => {
     fetchBooks();
@@ -20,43 +20,43 @@ const App: React.FC = () => {
 
   const fetchBooks = async () => {
     try {
-      const response = await axios.get<Book[]>(`${API_URL}/books`); // Utilizza l'URL di base
+      const response = await axios.get<Book[]>(`${API_URL}/books`);
       setBooks(response.data);
     } catch (error) {
       console.error('Error fetching books:', error);
     }
   };
 
-  const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setSearch(e.target.value);
-  };
-
   const handleAddBook = async (book: Omit<Book, '_id'>) => {
     try {
-      await axios.post(`${API_URL}/books`, book); // Utilizza l'URL di base
-      fetchBooks(); // Refresh the list after adding a book
+      await axios.post(`${API_URL}/books`, book);
+      fetchBooks(); // Ricarica la lista dei libri
+      setIsModalOpen(false); // Chiudi la modale
+      alert('Libro aggiunto con successo!');
     } catch (error) {
       console.error('Error adding book:', error);
+      alert('Errore nell\'aggiungere il libro.');
     }
   };
 
   const handleUpdateBook = async (book: Omit<Book, '_id'>) => {
-    try {
-      if (editingBook) {
+    if (editingBook) {
+      try {
         const updatedBook = { ...book, _id: editingBook._id };
-        await axios.put(`${API_URL}/books/${editingBook._id}`, updatedBook); // Utilizza l'URL di base
-        fetchBooks();
+        await axios.put(`${API_URL}/books/${editingBook._id}`, updatedBook);
+        fetchBooks(); // Ricarica la lista dei libri
         setEditingBook(null);
+        setIsModalOpen(false); // Chiudi la modale
+      } catch (error) {
+        console.error('Error updating book:', error);
       }
-    } catch (error) {
-      console.error('Error updating book:', error);
     }
   };
 
   const handleDeleteBook = async (id: string) => {
     try {
-      await axios.delete(`${API_URL}/books/${id}`); // Utilizza l'URL di base
-      fetchBooks(); // Refresh the list after deleting a book
+      await axios.delete(`${API_URL}/books/${id}`);
+      fetchBooks(); // Ricarica la lista dei libri
     } catch (error) {
       console.error('Error deleting book:', error);
     }
@@ -68,84 +68,85 @@ const App: React.FC = () => {
   );
 
   return (
-    <div id="wrapper">
-      <div id="header">
-        <ul>
-          <li id="user">User</li>
-          <li><a href="#">Visualizza Tutti i Libri </a></li>
-          <li><a href="#"></a></li>
-          <li id="apps"></li> {/* Apps */}
-          <li id="notifications"></li> {/* Notifications */}
-          <li id="user-menu">
-            <div id="user-initial">User</div>
-          </li>
-        </ul>
-      </div>
-
-      <div id="content">
-        <center>
-          <div id="logo">
-            <span id="country">Trovati un libro da leggere :)</span>
+    <Router>
+      <div id="wrapper">
+        <div id="header">
+          <ul>
+            <li id="user">User</li>
+            <li><a href="/all-books">Visualizza Tutti i Libri</a></li>
+            <li><a href="#">Non navigabile</a></li>
+            <li id="apps"></li>
+            <li id="notifications"></li>
+            <li id="user-menu">
+              <div id="user-initial">R</div>
+            </li>
+          </ul>
+        </div>
+        <div id="content">
+          <Routes>
+            <Route path="/" element={
+              <>
+                <center>
+                  <div id="logo">
+                    <span id="country">Trovati un libro da leggere :)</span>
+                  </div>
+                </center>
+                <form id="search-form" onSubmit={(e) => e.preventDefault()}>
+                  <center>
+                    <input
+                      type="text"
+                      name="search"
+                      id="search-box"
+                      placeholder="Cercati un libro da leggere"
+                      value={search}
+                      onChange={(e) => setSearch(e.target.value)}
+                    />
+                    <div id="button-container">
+                      <button type="button" onClick={() => setIsModalOpen(true)}>
+                        Aggiungi Libro
+                      </button>
+                      <button type="button" style={{ backgroundColor: 'rgb(0, 191, 255)' }}>
+                        My library ;)
+                      </button>
+                    </div>
+                  </center>
+                </form>
+                {isModalOpen && (
+                  <div id="modal">
+                    <div id="modal-content">
+                      <BookForm
+                        book={editingBook || { _id: '', title: '', author: '', published_year: new Date().getFullYear(), genre: '', stock: 0 }}
+                        onSave={editingBook ? handleUpdateBook : handleAddBook}
+                        onCancel={() => setIsModalOpen(false)}
+                      />
+                    </div>
+                  </div>
+                )}
+                    <BookList books={filteredBooks} onDelete={handleDeleteBook} onEdit={setEditingBook} />
+              </>
+            } />    
+            <Route path="/all-books" element={<AllBooks />} />
+          </Routes>
+        </div>
+        <div id="footer">
+          <div id="footer-left">
+            <ul>
+              <li><a href="#">Footer Link 1</a></li>
+              <li><a href="#">Footer Link 2</a></li>
+              <li><a href="#">Footer Link 3</a></li>
+            </ul>
           </div>
-        </center>
-
-        <form id="search-form" onSubmit={(e) => e.preventDefault()}>
-          <center>
-            <input
-              type="text"
-              name="search"
-              id="search-box"
-              placeholder="Cercati un libro da leggere"
-              value={search}
-              onChange={handleSearchChange}
-            />
-
- {/* da migliore il csss rendendolo ok */}
-
-            <div id="button-container">
-              <input
-                type="submit"
-                value="Aggiungi Libro"
-                onClick={() => setEditingBook({ _id: '', title: '', author: '', published_year: new Date().getFullYear(), genre: '', stock: 0 })}
-              />
-              <input
-                type="submit"
-                value="Ciao ;)"
-                style={{ backgroundColor: 'rgb(0, 191, 255)' }}
-              />
-            </div>
-          </center>
-        </form>
-
-        {editingBook && (
-          <BookForm
-            book={editingBook}
-            onSave={handleUpdateBook}
-            onCancel={() => setEditingBook(null)}
-          />
-        )}
-
-        <BookList books={filteredBooks} onDelete={handleDeleteBook} onEdit={setEditingBook} />
-      </div>
-
-      <div id="footer">
-        <div id="footer-left">
-          <ul>
-            <li><a href="#"></a></li>
-            <li><a href="#"></a></li>
-            <li><a href="#"></a></li>
-          </ul>
-        </div>
-        <div id="footer-right">
-          <ul>
-            <li><a href="#"></a></li>
-            <li><a href="#"></a></li>
-            <li><a href="#"></a></li>
-            <li><a href="#"></a></li>
-          </ul>
+          <div id="footer-right">
+            <ul>
+              <li><a href="#">Footer Link 4</a></li>
+              <li><a href="#">Footer Link 5</a></li>
+              <li><a href="#">Footer Link 6</a></li>
+              <li><a href="#">Footer Link 7</a></li>
+            </ul>
+          </div>
         </div>
       </div>
-    </div>
+    </Router>
   );
 };
 

@@ -1,0 +1,31 @@
+/* styles.css */
+
+
+/* Stili per la lista dei libri */
+button-container {
+
+    height: 200px;
+    background-color: #0051A8;
+    color: aliceblue;
+    border-radius: 20px;
+    cursor: pointer;
+}
+
+
+button {
+  background-color: #007AFF; /* Colore di sfondo blu */
+  color: white; /* Colore del testo bianco */
+  border: none; /* Rimuove il bordo predefinito */
+  border-radius: 8px; /* Angoli arrotondati */
+  padding: 10px 15px; /* Spaziatura interna */
+  font-size: 14px; /* Dimensione del font */
+  cursor: pointer; /* Cambia il cursore a mano */
+  margin: 5px; /* Margine tra i pulsanti */
+  transition: background-color 0.3s; /* Transizione dolce per hover */
+}
+
+button:hover {
+  background-color: #0051A8; /* Colore di sfondo blu più scuro al passaggio del mouse */
+
+}
+

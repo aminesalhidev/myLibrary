@@ -3,7 +3,7 @@ html, body {
   margin: 0;
   padding: 0;
   height: 100%;
-  background-color: #e5e5e4;
+  background-color: #ebebeb;
 }
 
 #wrapper {
@@ -23,7 +23,7 @@ html, body {
   background-image: url('immagini/logo.png');
   background-size: 272px auto;
   background-repeat: no-repeat;
-  width: 380px;
+  width:280px;
   height: 92px;
   display: table-cell;
   text-align: right;
@@ -31,7 +31,7 @@ html, body {
 }
 
 #country {
-  color: #09c6f6;
+  color: #009dff;
 }
 
 #search-box {
@@ -55,12 +55,16 @@ input[type="submit"] {
   background-color: #fa4892;
   border: 1px solid #F2F2F2;
   border-radius: 2px;
+  border: none;
   color: #fafafa;
   font-size: 13px;
   font-weight: bold;
   min-width: 54px;
   padding: 7px 16px;
-  margin: 0 2px;
+  margin: 0 10px;
+  margin-left: 10px;
+  
+
 }
 
 input[type="submit"]:hover {
@@ -132,14 +136,16 @@ a:hover {
   background-color: #000;
 }
 
+
 #user-menu {
   display: flex;
   align-items: center;
-  background-color: #00f2ff;
+  background-color: #00a2ff;
   border-radius: 50%;
   width: 32px;
   height: 32px;
 }
+
 
 #user-initial {
   width: 100%;
@@ -147,9 +153,10 @@ a:hover {
   color: #FFF;
 }
 
+
 /* Footer */
 #footer {
-  background-color: #054dde;
+  background-color: #0084ff;
   border-top: 1px solid #E4E4E4;
   height: 40px;
   width: 100%;
@@ -159,24 +166,44 @@ a:hover {
   position: fixed;
 }
 
-#footer ul {
-  height: 100%;
-}
-
-#footer li {
-  padding-left: 27px;
-  font-size: small;
-}
-
-#footer li a {
-  color: #666;
-}
 
 #footer-left {
   float: left;
 }
 
+
 #footer-right {
   float: right;
   padding-right: 40px;
+}
+
+/* styles.css */
+
+
+/* Stili per la lista dei libri */
+button-container {
+
+  height: 200px;
+  background-color: #0051A8;
+  color: aliceblue;
+  border-radius: 20px;
+  cursor: pointer;
+}
+
+
+button {
+background-color: #007AFF; /* Colore di sfondo blu */
+color: white; /* Colore del testo bianco */
+border: none; /* Rimuove il bordo predefinito */
+border-radius: 8px; /* Angoli arrotondati */
+padding: 10px 15px; /* Spaziatura interna */
+font-size: 14px; /* Dimensione del font */
+cursor: pointer; /* Cambia il cursore a mano */
+margin: 5px; /* Margine tra i pulsanti */
+transition: background-color 0.3s; /* Transizione dolce per hover */
+}
+
+button:hover {
+background-color: #0051A8; /* Colore di sfondo blu più scuro al passaggio del mouse */
+
 }

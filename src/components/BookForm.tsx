@@ -1,92 +1,86 @@
-// src/components/BookForm.tsx
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { Book } from '../types';
 
 interface BookFormProps {
-  book: Book | null;
-  onSave: (book: Omit<Book, '_id'>) => Promise<void>;
+  book: Book;
+  onSave: (book: Omit<Book, '_id'>) => void;
   onCancel: () => void;
 }
 
 const BookForm: React.FC<BookFormProps> = ({ book, onSave, onCancel }) => {
-  const [title, setTitle] = useState(book?.title || '');
-  const [author, setAuthor] = useState(book?.author || '');
-  const [publishedYear, setPublishedYear] = useState<number>(book?.published_year || 0);
-  const [genre, setGenre] = useState(book?.genre || '');
-  const [stock, setStock] = useState<number>(book?.stock || 0);
+  const [title, setTitle] = useState(book.title);
+  const [author, setAuthor] = useState(book.author);
+  const [publishedYear, setPublishedYear] = useState(book.published_year);
+  const [genre, setGenre] = useState(book.genre);
+  const [stock, setStock] = useState(book.stock);
+  const [error, setError] = useState<string | null>(null);
 
-  useEffect(() => {
-    if (book) {
-      setTitle(book.title);
-      setAuthor(book.author);
-      setPublishedYear(book.published_year);
-      setGenre(book.genre);
-      setStock(book.stock);
-    }
-  }, [book]);
-
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    const newBook = {
-      title,
-      author,
-      published_year: publishedYear,
-      genre,
-      stock,
-    };
-    await onSave(newBook);
-    onCancel();
+  const validateBook = (): string | null => {
+    if (!title.trim()) return "Il titolo è obbligatorio.";
+    if (!author.trim()) return "L'autore è obbligatorio.";
+    if (publishedYear > new Date().getFullYear()) return "L'anno di pubblicazione non può essere nel futuro (Riprova).";
+    return null;
   };
-  
 
-  /* Input che aggiungiamo mente inseriamo i nuovi dati nel sistema di gestione mongodb.*/ 
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    const validationError = validateBook();
+    if (validationError) {
+      setError(validationError);
+      return;
+    }
+    onSave({ title, author, published_year: publishedYear, genre, stock });
+  };
 
   return (
-    
-    <form onSubmit={handleSubmit}>
-      <input
-        type="text"
-        value={title}
-        onChange={(e) => setTitle(e.target.value)}
-        placeholder="Titolo"
-        required
-      />
-
-      <input
-        type="text"
-        value={author}
-        onChange={(e) => setAuthor(e.target.value)}
-        placeholder="Autore"
-        required
-      />
-
-      <input
-        type="number"
-        value={publishedYear}
-        onChange={(e) => setPublishedYear(parseInt(e.target.value))}
-        placeholder="Anno di pubblicazioner"
-        required
-      />
-
-      <input
-        type="text"
-        value={genre}
-        onChange={(e) => setGenre(e.target.value)}
-        placeholder="Genere"
-        required
-      />
-
-      <input
-        type="number"
-        value={stock}
-        onChange={(e) => setStock(parseInt(e.target.value))}
-        placeholder="Stock"
-        required
-      />
-
-      <button type="submit">Aggiungi</button>
-      <button type="button" onClick={onCancel}>Cancella</button>
-    </form>
+    <div id="book-form">
+      <h2>{book._id ? 'Modifica Libro' : 'Aggiungi Libro'}</h2>
+      {error && <div className="error">{error}</div>}
+      <form onSubmit={handleSubmit}>
+        <label>
+          Titolo:
+          <input
+            type="text"
+            value={title}
+            onChange={(e) => setTitle(e.target.value)}
+          />
+        </label>
+        <label>
+          Autore:
+          <input
+            type="text"
+            value={author}
+            onChange={(e) => setAuthor(e.target.value)}
+          />
+        </label>
+        <label>
+          Anno di Pubblicazione:
+          <input
+            type="number"
+            value={publishedYear}
+            onChange={(e) => setPublishedYear(Number(e.target.value))}
+          />
+        </label>
+        <label>
+          Genere:
+          <input
+            type="text"
+            value={genre}
+            onChange={(e) => setGenre(e.target.value)}
+          />
+        </label>
+        <label>
+          Stock:
+          <input
+            type="number"
+            value={stock}
+            onChange={(e) => setStock(Number(e.target.value))}
+          />
+        </label>
+        <button type="submit">{book._id ? 'Salva Modifiche' : 'Aggiungi Libro'}</button>
+        <button type="button" onClick={onCancel}>Annulla</button>
+      </form>
+    </div>
   );
 };
 
