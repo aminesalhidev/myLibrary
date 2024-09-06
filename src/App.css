@@ -3,7 +3,7 @@ html, body {
   margin: 0;
   padding: 0;
   height: 100%;
-  background-color: #ebebeb;
+  background-color: #eeeeee;
 }
 
 #wrapper {
@@ -204,6 +204,7 @@ transition: background-color 0.3s; /* Transizione dolce per hover */
 }
 
 button:hover {
-background-color: #0051A8; /* Colore di sfondo blu più scuro al passaggio del mouse */
+background-color: #ffffff; /* Colore di sfondo blu più scuro al passaggio del mouse */
+color: #007AFF;
 
 }

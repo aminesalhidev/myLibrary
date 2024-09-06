@@ -88,7 +88,7 @@ const App: React.FC = () => {
               <>
                 <center>
                   <div id="logo">
-                    <span id="country">Trovati un libro da leggere :)</span>
+                    <span id="country">Trovati un libro da leggere </span>
                   </div>
                 </center>
                 <form id="search-form" onSubmit={(e) => e.preventDefault()}>
@@ -131,17 +131,17 @@ const App: React.FC = () => {
         <div id="footer">
           <div id="footer-left">
             <ul>
-              <li><a href="#">Footer Link 1</a></li>
-              <li><a href="#">Footer Link 2</a></li>
-              <li><a href="#">Footer Link 3</a></li>
+              <li><a href="#"></a></li>
+              <li><a href="#"></a></li>
+              <li><a href="#"></a></li>
             </ul>
           </div>
           <div id="footer-right">
             <ul>
-              <li><a href="#">Footer Link 4</a></li>
-              <li><a href="#">Footer Link 5</a></li>
-              <li><a href="#">Footer Link 6</a></li>
-              <li><a href="#">Footer Link 7</a></li>
+            <li><a href="#"></a></li>
+            <li><a href="#"></a></li>
+            <li><a href="#"></a></li>
+            <li><a href="#"></a></li>
             </ul>
           </div>
         </div>
